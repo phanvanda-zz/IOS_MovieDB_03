@@ -14,15 +14,22 @@ class FavoriteTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet private weak var nameMovieLabel: UILabel!
     @IBOutlet private weak var descriptionMovieLabel: UILabel!
     
+    var movie: Movie?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     
     func setupCell(movie: Movie?) {
-        nameMovieLabel.text = movie?.title
-        descriptionMovieLabel.text = movie?.overview
-        guard let poster = movie?.posterPath else { return }
+        guard let movieValue = movie,
+        let poster = movie?.posterPath,
+        let title = movie?.title,
+        let overview = movie?.overview
+        else { return }
         let url = URL(string: URLs.posterImage + poster)
+        nameMovieLabel.text = title
+        descriptionMovieLabel.text = overview
         movieImageView.sd_setImage(with: url, completed: nil)
+        self.movie = movieValue
     }
 }

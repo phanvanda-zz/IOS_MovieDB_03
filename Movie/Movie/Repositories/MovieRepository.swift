@@ -43,7 +43,7 @@ class MovieRepositoryImpl: MovieRepository {
     static let sharedInstance: MovieRepository = MovieRepositoryImpl(api: APIService.share)
     
     func getMoviesList(id: Int, completion: @escaping completionMovies) {
-        let input = GetMoviesRequest(id: id)
+        let input = GetMoviesRequest(id: id, page: 1)
         api?.request(input: input) { (object: MoviesResponse?, error) in
             if let object = object {
                 completion(.success(object))

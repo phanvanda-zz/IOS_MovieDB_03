@@ -11,9 +11,10 @@ import ObjectMapper
 import Alamofire
 
 class GetMoviesRequest: BaseRequest {
-    required init(id: Int) {
+    required init(id: Int, page: Int) {
         let body: [String: Any] = [
             "api_key": APIKey.key,
+            "page" : page,
             "language": "en-US"
         ]
         let url = URLs.apiGetMovies + "\(id)" + "/movies"

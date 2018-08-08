@@ -11,16 +11,21 @@ import UIKit
 import Reusable
 
 final class LoadMoreViewController: UIViewController, StoryboardSceneBased {
+    @IBOutlet private weak var titleScreenLabel: UILabel!
     @IBOutlet private weak var titleView: UIView!
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var backButton: UIButton!
     
     var movies = [Movie]()
+    var name = ""
+    
     static let sceneStoryboard = UIStoryboard(name: Storyboard.home, bundle: nil)
     
     private struct Constant {
         static let spaceItem = CGFloat(0)
         static let spaceLine = CGFloat(0)
+        static let ratioWidth: CGFloat = 1 / 3
+        static let ratioHeigh: CGFloat = 1 / 3
     }
     
     override func viewDidLoad() {
@@ -32,10 +37,12 @@ final class LoadMoreViewController: UIViewController, StoryboardSceneBased {
         collectionView.register(cellType: MovieCollectionViewCell.self)
         backButton.imageView?.contentMode = .scaleAspectFit
         setupUILine(view: titleView)
+        titleScreenLabel.text = name
     }
     
-    func reloadData(movies: [Movie]) {
+    func reloadData(name: String, movies: [Movie]) {
         self.movies = movies
+        self.name = name
     }
     
     @IBAction func backHomeTappedButton(_ sender: Any) {
@@ -43,11 +50,11 @@ final class LoadMoreViewController: UIViewController, StoryboardSceneBased {
     }
     
     func pushMovieDetail(movie: Movie) {
-        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: IdentifierScreen.movieDetail) as? MovieDetailViewController else {
+        guard let movieDetailVC = self.storyboard?.instantiateViewController(withIdentifier: IdentifierScreen.movieDetail) as? MovieDetailViewController else {
             return
         }
-        vc.movie = movie
-        present(vc, animated: true, completion: nil)
+        movieDetailVC.movie = movie
+        present(movieDetailVC, animated: true, completion: nil)
     }
 }
 
@@ -63,7 +70,7 @@ extension LoadMoreViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.width) / 4 + 4 * cellConstaintSize.spaceCollectionCell , height: collectionView.frame.height / 3)
+        return CGSize(width: (collectionView.frame.width) * Constant.ratioWidth, height: collectionView.frame.height * Constant.ratioHeigh)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -79,5 +86,12 @@ extension LoadMoreViewController: UICollectionViewDataSource, UICollectionViewDe
             let movie = cell.movie
             else { return }
         pushMovieDetail(movie: movie)
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let lastElement = movies.count - 1
+        if indexPath.row == lastElement {
+            
+        }
     }
 }

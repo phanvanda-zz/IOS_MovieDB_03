@@ -13,9 +13,9 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
         static let actorStr = "ACTOR"
         static let crewStr = "CREW"
         static let heightMore: CGFloat = 24
-        static let loading = "Loading..."
         static let sectionTable = 2
         static let rowTable = 1
+        static let heighLabel: CGFloat = 40
     }
     
     private enum tagCollectionView: Int {
@@ -24,6 +24,7 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
     }
     
     // MARK: OUTLET
+    @IBOutlet private weak var titleScreenLabel: UILabel!
     @IBOutlet private weak var titleView: UIView!
     @IBOutlet private weak var infoView: UIView!
     @IBOutlet private weak var posterImageView: UIImageView!
@@ -50,7 +51,9 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
     var actors = [Credit]()
     var crews = [Credit]()
     var keys = [KeyTrailer]()
+    var seemore = true
     var flag = false
+    var heighLabel: CGFloat = 0
     private let moviesRepository: MovieRepository = MovieRepositoryImpl(api: APIService.share)
     static var sceneStoryboard = UIStoryboard(name: Storyboard.home, bundle: nil)
     
@@ -79,6 +82,7 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
             let releaseDate = movie?.releaseDate,
             let popular = movie?.popularity
             else { return }
+        titleScreenLabel.text = title
         titleMovie.text = title
         posterImageView.sd_setImage(with: url, completed: nil)
         cosmosView.rating = vote / 2
@@ -86,21 +90,25 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
         dateLabel.text = "Release date: " + releaseDate 
         popularLabel.text = "Popularity: " + String(popular)
         reviewLabel.text = overview
+        heighLabel = getHeighLabel()
         loadWithApi()
     }
     
     private func loadWithApi() {
-        showHud(Constant.loading)
+        showHud(ConstantString.loadStr)
         guard let id = movie?.id else { return }
-        moviesRepository.getKeyTrailer(id: id){ [weak self] (resultKeys) in
+        moviesRepository.getKeyTrailer(id: id) {
+            [weak self] (resultKeys) in
             guard let `self` = self else { return }
             switch resultKeys {
             case .success(let keyRespone):
                 guard let keys = keyRespone?.keyTrailers else { return }
                 self.keys = keys
-                self.getTrailer()
-            case .failure( _):
-                print("ERROR KEY")
+                DispatchQueue.main.async {
+                    self.getTrailer()
+                }
+            case .failure(let error):
+                print("ERROR KEY \(error.debugDescription.description)")
             }
         }
         moviesRepository.getCredit(id: id) { [weak self] (resultCredits) in
@@ -114,9 +122,10 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
                 self.crews = crews
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+                    self.hideHUD()
                 }
-            case .failure( _):
-                print("ERROR CREDIT")
+            case .failure(let error):
+                print("ERROR CREDIT \(error.debugDescription.description)")
             }
         }
     }
@@ -124,7 +133,6 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
     private func getTrailer() {
         guard let key = keys.first?.key else { return }
         youtubePlayer.load(withVideoId: key)
-        self.hideHUD()
     }
     
     private func pushCreditDetail(credit: Credit?) {
@@ -135,13 +143,21 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
         present(creditDetailVC, animated: true, completion: nil)
     }
     
+    func getHeighLabel() -> CGFloat {
+        guard let height = reviewLabel.text?.height(withConstrainedWidth: reviewLabel.frame.width, font: UIFont.systemFont(ofSize: 15)) else { return Constant.heighLabel }
+        return height
+    }
+    
     //MARK: ACTION
     @IBAction private func seeMoreTappedButton(_ sender: Any) {
-        guard let height = reviewLabel.text?.height(withConstrainedWidth: reviewLabel.frame.width, font: UIFont.systemFont(ofSize: 17)) else { return }
-        heightConstraintView.constant = height
-        heightReviewView.constant = heightReviewView.constant + height
-        seeMoreButton.isHidden = true
-        youtubePlayer.topAnchor.constraint(equalTo: reviewLabel.bottomAnchor).isActive = true
+        if seemore {
+            heightConstraintView.constant = heighLabel
+            seeMoreButton.setTitle(ConstantString.hide, for: .normal)
+        } else {
+            heightConstraintView.constant = Constant.heighLabel
+            seeMoreButton.setTitle(ConstantString.seemore, for: .normal)
+        }
+        seemore = !seemore
     }
     
     @IBAction private func backTappedButton(_ sender: Any) {
@@ -173,12 +189,18 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
             flag = !flag
             HandlingMoviesDatabase.shared.insertMovie(movie: movieLike)
             likeButton.setImage(#imageLiteral(resourceName: "like_yes"), for: .normal)
-            StatusBarNotifications.show(withText: "The movie has been added to the favorites list", animation: .slideFromTop, backgroundColor: .black, textColor: ColorConstant.textNoti)
+            StatusBarNotifications.show(withText: ConstantString.added,
+                                        animation: .slideFromTop,
+                                        backgroundColor: .black,
+                                        textColor: ColorConstant.textNoti)
         } else {
             HandlingMoviesDatabase.shared.deteleMovie(movie: movieLike)
             flag = !flag
             likeButton.setImage(#imageLiteral(resourceName: "like_no"), for: .normal)
-            StatusBarNotifications.show(withText: "The movie has been removed from the favorites list", animation: .slideFromTop, backgroundColor: .black, textColor: ColorConstant.textNoti)
+            StatusBarNotifications.show(withText: ConstantString.removed,
+                                        animation: .slideFromTop,
+                                        backgroundColor: .black,
+                                        textColor: ColorConstant.textNoti)
         }
     }
 }

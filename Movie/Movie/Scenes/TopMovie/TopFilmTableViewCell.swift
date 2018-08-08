@@ -15,7 +15,8 @@ class TopFilmTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet private weak var collectionView: UICollectionView!
     
     var movies = [Movie]()
-    weak var delegate: tableViewDelegate?
+    var name = ""
+    weak var delegate: TableViewDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,7 +26,7 @@ class TopFilmTableViewCell: UITableViewCell, NibReusable {
     func setup() {
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
-        self.collectionView.register(cellType: TopFilmCollectionViewCell.self)
+        self.collectionView.register(cellType: MovieCollectionViewCell.self)
     }
     
     func updateCell(movies: [Movie]?,namelbl:String) {
@@ -33,10 +34,11 @@ class TopFilmTableViewCell: UITableViewCell, NibReusable {
         self.movies = movies
         self.nameLabel.text = namelbl
         self.collectionView.reloadData()
+        name = namelbl
     }
     
     @IBAction func loadmoreActionButton(_ sender: Any) {
-        delegate?.loadmoreAction(movies: movies)
+        delegate?.loadmoreAction(name: name, movies: movies)
     }
 }
 
@@ -47,7 +49,7 @@ extension TopFilmTableViewCell: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: TopFilmCollectionViewCell.self) as? TopFilmCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: MovieCollectionViewCell.self) as? MovieCollectionViewCell else {
             return UICollectionViewCell()
         }
         cell.updateCell(movie: movies[indexPath.row])
@@ -59,7 +61,7 @@ extension TopFilmTableViewCell: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? TopFilmCollectionViewCell,
+        guard let cell = collectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell,
             let movie = cell.movie else {
                 return
         }

@@ -21,14 +21,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kOR-ZM-HWT">
-                        <rect key="frame" x="16" y="23" width="280" height="20.5"/>
-                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                        <color key="textColor" red="1" green="0.54019108810000005" blue="0.96850592550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <rect key="frame" x="16" y="23" width="280" height="18"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                        <color key="textColor" red="1" green="0.25098039215686274" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="TfY-r2-C07">
-                        <rect key="frame" x="16" y="51.5" width="280" height="225.5"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <rect key="frame" x="16" y="49" width="280" height="228"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="IrD-Wn-IE9">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -41,7 +41,7 @@
                         </connections>
                     </collectionView>
                 </subviews>
-                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="TfY-r2-C07" firstAttribute="trailing" secondItem="kOR-ZM-HWT" secondAttribute="trailing" id="9Uf-No-6ns"/>
                     <constraint firstItem="TfY-r2-C07" firstAttribute="top" secondItem="kOR-ZM-HWT" secondAttribute="bottom" constant="8" id="Aax-Wy-dsK"/>
@@ -49,9 +49,10 @@
                     <constraint firstItem="kOR-ZM-HWT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="12" id="MNq-VN-phN"/>
                     <constraint firstAttribute="trailingMargin" secondItem="kOR-ZM-HWT" secondAttribute="trailing" constant="8" id="MZt-PX-HGU"/>
                     <constraint firstAttribute="bottomMargin" secondItem="TfY-r2-C07" secondAttribute="bottom" constant="8" id="WRe-Te-vIt"/>
-                    <constraint firstItem="kOR-ZM-HWT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="krT-53-D7k"/>
+                    <constraint firstItem="kOR-ZM-HWT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="d20-Gg-Dzt"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="collectionView" destination="TfY-r2-C07" id="Lvq-8v-Gdj"/>

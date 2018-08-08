@@ -18,6 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.saveContext()
     }
 
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        UIApplication.shared.statusBarStyle = .lightContent
+        return true
+    }
+    
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Movie")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in

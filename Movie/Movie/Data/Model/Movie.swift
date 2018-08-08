@@ -9,6 +9,7 @@ class Movie: BaseModel {
     var overview = ""
     var releaseDate = ""
     var popularity = 0
+    var backdropPath = ""
     
     // MARK: CREDIT
     var character = ""
@@ -25,12 +26,22 @@ class Movie: BaseModel {
         releaseDate <- map["release_date"]
         popularity <- map["popularity"]
         character <- map["character"]
+        backdropPath <- map["backdrop_path"]
     }
     
-    init(movieId: Int, title: String, posterPath: String, overview: String) {
+    init(movieId: Int,
+         title: String,
+         posterPath: String,
+         overview: String,
+         vote: Double,
+         date: String,
+         popularity: Int) {
         self.id = movieId
         self.title = title
         self.posterPath = posterPath
         self.overview = overview
+        self.vote = vote
+        self.releaseDate = date
+        self.popularity = popularity
     }
 }

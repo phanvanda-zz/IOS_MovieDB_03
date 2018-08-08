@@ -9,8 +9,8 @@
 import UIKit
 import Reusable
 
-protocol tableViewDelegate: class {
-    func loadmoreAction(movies: [Movie])
+protocol TableViewDelegate: class {
+    func loadmoreAction(name: String, movies: [Movie])
     func pushMovieDetail(movie: Movie)
 }
 
@@ -22,15 +22,17 @@ class GenreTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet private weak var loadMoreButton: UIButton!
     
     // MARK: VARIABLES
-    var movies = [Movie]()
-    weak var delegate: tableViewDelegate?
+    private var movies = [Movie]()
+    private var name = ""
+    weak var delegate: TableViewDelegate?
     private let moviesListRepository: MovieRepository = MovieRepositoryImpl(api: APIService.share)
     
-    func updateCell(name: String, movies: [Movie]?) {
-        name_Genre_Label.text = name
-        guard let movies = movies else {
+    func updateCell(name: String?, movies: [Movie]?) {
+        guard let movies = movies, let name = name else {
             return
         }
+        name_Genre_Label.text = name
+        self.name = name
         self.movies = movies
         self.collectionView.reloadData()
     }
@@ -41,7 +43,7 @@ class GenreTableViewCell: UITableViewCell, NibReusable {
     }
     
     @IBAction func loadmoreActionButton(_ sender: Any) {
-        delegate?.loadmoreAction(movies: movies)
+        delegate?.loadmoreAction(name: name, movies: movies)
     }
     
     func setup() {

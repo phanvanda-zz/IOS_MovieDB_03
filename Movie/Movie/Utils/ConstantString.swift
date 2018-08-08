@@ -34,6 +34,7 @@ struct cellConstaintSize {
     static let spaceLine = CGFloat(0)
     static let minusHeightTable = CGFloat(24)
     static let minus2HeightTable = CGFloat(40)
+    static let plusHeighCollection = CGFloat(32)
 }
 
 struct IdentifierScreen {
@@ -51,8 +52,15 @@ struct MovieInfoDB {
     static let title = "title"
     static let overview = "overview"
     static let posterPath = "posterPath"
+    static let date = "date"
+    static let vote = "vote"
+    static let popularity = "popularity"
 }
 
 struct ConstantString {
     static let loadStr = "Loading..."
+    static let hide = "Hide"
+    static let seemore = "Seemore"
+    static let added = "Added to the favorites list"
+    static let removed = "Removed from the favorites list"
 }

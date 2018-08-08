@@ -19,6 +19,8 @@ class CreditDetailTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var popularLabel: UILabel!
     
+    var movie: Movie?
+    
     private struct ConstantString {
         static let placeBirth = "Place birth: "
         static let date = "Release date: "
@@ -33,6 +35,7 @@ class CreditDetailTableViewCell: UITableViewCell, NibReusable {
         let poster = movie.posterPath
         let vote = movie.vote
         let url = URL(string: URLs.posterImage + poster)
+        self.movie = movie
         backdropImageView.sd_setImage(with: url, completed: nil)
         nameLabel.text = movie.title
         voteLabel.text = "( \(vote) )"

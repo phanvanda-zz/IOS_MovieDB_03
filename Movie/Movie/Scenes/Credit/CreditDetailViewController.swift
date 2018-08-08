@@ -11,6 +11,7 @@ import Reusable
 
 class CreditDetailViewController: UIViewController, NibReusable {
     //MAKR: OUTLET
+    @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var titleView: UIView!
     @IBOutlet private weak var infoView: UIView!
     @IBOutlet private weak var avatarImageView: UIImageView!
@@ -31,7 +32,7 @@ class CreditDetailViewController: UIViewController, NibReusable {
         static let dateBirthString = "Date: "
         static let womanString = "Gender: Woman"
         static let manString = "Gender: Man"
-        static let heighCellRatioSize: CGFloat = 1 / 3
+        static let heighCellRatioSize: CGFloat = 0.25
         static let widthBorderSize: CGFloat = 1
         static let whiteColor = UIColor.white.cgColor
         static let loadString = "Loading ... "
@@ -46,7 +47,6 @@ class CreditDetailViewController: UIViewController, NibReusable {
         self.showHud(Constant.loadString)
         loadData()
         loadWithApi()
-        self.hideHUD()
     }
     
     private func setup() {
@@ -58,11 +58,13 @@ class CreditDetailViewController: UIViewController, NibReusable {
         guard let name = credit?.name,
             let gender = credit?.gender,
             let poster = credit?.profilePath,
+            let knowLedge = credit?.knownForDepartment,
             let url = URL(string: URLs.posterImage + poster) else {
                 return
         }
         avatarImageView.sd_setImage(with: url, completed: nil)
         nameLabel.text = name
+        titleLabel.text = knowLedge
         genderLabel.text = gender == 1 ? Constant.womanString : Constant.manString
     }
     
@@ -78,8 +80,8 @@ class CreditDetailViewController: UIViewController, NibReusable {
                     let knownForDepartment = personRespone?.knownForDepartment,
                     let placeOfBirth = personRespone?.placeOfBirth,
                     let birthday = personRespone?.birthday else { return }
+                self.titleLabel.text = knownForDepartment
                 self.biographyLabel.text = biography
-                self.knowLedgeLabel.text = knownForDepartment
                 self.placeBirthLabel.text = Constant.placeBirthString + placeOfBirth
                 self.dateLabel.text = Constant.dateBirthString + birthday
             case .failure( _):
@@ -93,11 +95,20 @@ class CreditDetailViewController: UIViewController, NibReusable {
                 guard let movies = creditRespone?.movies
                     else { return }
                 self.movies = movies
-                self.tableView.reloadData()
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.hideHUD()
+                }
             case .failure( _):
                 print("ERROR CREDIT")
             }
         }
+    }
+    
+    func pushMovieDetail(movie: Movie) {
+        let movieVC = MovieDetailViewController.instantiate()
+        movieVC.movie = movie
+        present(movieVC, animated: true, completion: nil)
     }
     
     @IBAction func backTappedButton(_ sender: Any) {
@@ -114,10 +125,18 @@ extension CreditDetailViewController: UITableViewDataSource, UITableViewDelegate
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: CreditDetailTableViewCell.self) as CreditDetailTableViewCell
         let movie = movies[indexPath.row]
         cell.updateCell(movie: movie)
+        cell.selectionStyle = .none
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.view.frame.height * Constant.heighCellRatioSize
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? CreditDetailTableViewCell,
+            let movie = cell.movie
+            else { return }
+        pushMovieDetail(movie: movie)
     }
 }

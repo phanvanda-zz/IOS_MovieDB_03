@@ -46,10 +46,10 @@ class TopFilmViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setTableView()
-       
+        
     }
     override func viewWillAppear(_ animated: Bool) {
-         loadData()
+        loadData()
     }
     func setTableView() {
         self.topFilmTableView.backgroundColor = UIColor.black
@@ -62,14 +62,13 @@ class TopFilmViewController: UIViewController {
         setupUILine(view: titleView)
     }
     private func loadData() {
-        showHud(Constaint.loadingStr)
         loadDataTopRate()
         loadDataPopular()
         loadDataUpcoming()
-        hideHUD()
     }
     
     func loadDataTopRate() {
+        showHud(Constaint.loadingStr)
         self.movieRepository.getTopMoviesList(completion: { [weak self] (resultList) in
             guard let `self` = self else { return }
             switch resultList {
@@ -80,6 +79,7 @@ class TopFilmViewController: UIViewController {
                 self.arrFilm.append(self.topRateFilm)
                 DispatchQueue.main.async {
                     self.topFilmTableView.reloadData()
+                    self.hideHUD()
                 }
             case .failure( _):
                 print("Error")
@@ -88,6 +88,7 @@ class TopFilmViewController: UIViewController {
     }
     
     func loadDataPopular() {
+        showHud(Constaint.loadingStr)
         movieRepository.getPopularMoviesList(completion: { [weak self] (resultList) in
             guard let `self` = self else { return }
             switch resultList {
@@ -97,6 +98,7 @@ class TopFilmViewController: UIViewController {
                 self.arrFilm.append(self.popularFilm)
                 DispatchQueue.main.async {
                     self.topFilmTableView.reloadData()
+                    self.hideHUD()
                 }
             case .failure( _):
                 print("Error")
@@ -105,6 +107,7 @@ class TopFilmViewController: UIViewController {
     }
     
     func loadDataUpcoming() {
+        showHud(Constaint.loadingStr)
         self.movieRepository.getUpcomingMoviesList(completion: { [weak self] (resultList) in
             guard let `self` = self else { return }
             switch resultList {
@@ -114,6 +117,7 @@ class TopFilmViewController: UIViewController {
                 self.arrFilm.append(self.upcommingFilm)
                 DispatchQueue.main.async {
                     self.topFilmTableView.reloadData()
+                    self.hideHUD()
                 }
             case .failure( _):
                 print("Error")
@@ -128,7 +132,7 @@ extension TopFilmViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.bounds.height / 2 - cellConstaintSize.minusHeightTable
+        return tableView.bounds.height / 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -144,16 +148,16 @@ extension TopFilmViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension TopFilmViewController: tableViewDelegate {
+extension TopFilmViewController: TableViewDelegate {
     func pushMovieDetail(movie: Movie) {
         let vc = MovieDetailViewController.instantiate()
         vc.movie = movie
         self.present(vc, animated: true, completion: nil)
     }
     
-    func loadmoreAction(movies: [Movie]) {
+    func loadmoreAction(name: String, movies: [Movie]) {
         let vc = LoadMoreViewController.instantiate()
-        vc.reloadData(movies: movies)
+        vc.reloadData(name: name, movies: movies)
         present(vc, animated: true, completion: nil)
     }
 }

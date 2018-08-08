@@ -11,7 +11,7 @@ import ObjectMapper
 
 protocol HomeRepository {
     func getGenres(completion: @escaping completionGenres)
-    func getMovies(id: Int?, completion: @escaping completionMovies)
+    func getMovies(id: Int?,page: Int?, completion: @escaping completionMovies)
 }
 
 typealias completionGenres = (BaseResult<GenreResponse>) -> Void
@@ -42,12 +42,13 @@ class HomeRepositoryImpl: HomeRepository {
         }
     }
     
-    func getMovies(id: Int?, completion: @escaping completionMovies) {
+    func getMovies(id: Int?, page: Int?,completion: @escaping completionMovies) {
         guard let id = id,
-            let api = api else {
+            let api = api,
+            let page = page else {
             return
         }
-        let input = GetMoviesRequest(id: id)
+        let input = GetMoviesRequest(id: id, page: page)
         api.request(input: input) { (object: MoviesResponse?, error) in
             guard let object = object else {
                 guard let error = error else {

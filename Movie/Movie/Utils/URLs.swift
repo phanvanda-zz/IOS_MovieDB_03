@@ -33,5 +33,7 @@ struct URLs {
     
     public static let posterImage = "https://image.tmdb.org/t/p/w300_and_h450_bestv2"
     
+    public static let backdropImage = "https://image.tmdb.org/t/p/original"
+    
     static let apiMovieSearch = apiBaseUrl + "/search/movie"
 }

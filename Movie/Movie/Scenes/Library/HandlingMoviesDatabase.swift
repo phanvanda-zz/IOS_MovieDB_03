@@ -33,6 +33,9 @@ class HandlingMoviesDatabase {
                 movieObject.setValue(movie.title, forKey: MovieInfoDB.title)
                 movieObject.setValue(movie.overview, forKey: MovieInfoDB.overview)
                 movieObject.setValue(movie.posterPath, forKey: MovieInfoDB.posterPath)
+                movieObject.setValue(movie.vote, forKey: MovieInfoDB.vote)
+                movieObject.setValue(movie.releaseDate, forKey: MovieInfoDB.date)
+                movieObject.setValue(movie.popularity, forKey: MovieInfoDB.popularity)
                 print(movieObject)
                 try managedContext.save()
                 return true
@@ -78,7 +81,16 @@ class HandlingMoviesDatabase {
                     let tmpTitleMovie = i.value(forKey: MovieInfoDB.title) as? String ?? ""
                     let tmpPosterPath = i.value(forKey: MovieInfoDB.posterPath) as? String ?? ""
                     let tmpOverview = i.value(forKey: MovieInfoDB.overview) as? String ?? ""
-                    let tmpMovieData = Movie(movieId: tmpMovieId, title: tmpTitleMovie, posterPath: tmpPosterPath, overview: tmpOverview)
+                    let tmpVote = i.value(forKey: MovieInfoDB.vote) as? Double ?? 0.0
+                    let tmpDate = i.value(forKey: MovieInfoDB.date) as? String ?? ""
+                    let tmpPopularity = i.value(forKey: MovieInfoDB.popularity) as? Int ?? 0
+                    let tmpMovieData = Movie(movieId: tmpMovieId,
+                                             title: tmpTitleMovie,
+                                             posterPath: tmpPosterPath,
+                                             overview: tmpOverview,
+                                             vote: tmpVote,
+                                             date: tmpDate,
+                                             popularity: tmpPopularity)
                     tmpMovies.append(tmpMovieData)
                 }
             } catch {
