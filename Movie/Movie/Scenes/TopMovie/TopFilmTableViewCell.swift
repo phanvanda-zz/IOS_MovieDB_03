@@ -15,7 +15,7 @@ class TopFilmTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet private weak var collectionView: UICollectionView!
     
     var movies = [Movie]()
-    weak var delegate: tableViewDelegate?
+    weak var delegate: TableViewDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()

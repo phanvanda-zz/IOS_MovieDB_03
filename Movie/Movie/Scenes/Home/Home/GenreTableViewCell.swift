@@ -9,7 +9,7 @@
 import UIKit
 import Reusable
 
-protocol tableViewDelegate: class {
+protocol TableViewDelegate: class {
     func loadmoreAction(movies: [Movie])
     func pushMovieDetail(movie: Movie)
 }
@@ -23,14 +23,14 @@ class GenreTableViewCell: UITableViewCell, NibReusable {
     
     // MARK: VARIABLES
     var movies = [Movie]()
-    weak var delegate: tableViewDelegate?
+    weak var delegate: TableViewDelegate?
     private let moviesListRepository: MovieRepository = MovieRepositoryImpl(api: APIService.share)
     
-    func updateCell(name: String, movies: [Movie]?) {
-        name_Genre_Label.text = name
-        guard let movies = movies else {
+    func updateCell(name: String?, movies: [Movie]?) {
+        guard let movies = movies, let name = name else {
             return
         }
+        name_Genre_Label.text = name
         self.movies = movies
         self.collectionView.reloadData()
     }

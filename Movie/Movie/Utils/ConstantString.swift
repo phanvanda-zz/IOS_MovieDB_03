@@ -41,5 +41,5 @@ struct IdentifierScreen {
 }
 
 struct ConstantString {
-    static let loadStr = "Loading..."
+    static let load = "Loading..."
 }

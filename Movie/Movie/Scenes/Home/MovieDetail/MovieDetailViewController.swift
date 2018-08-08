@@ -85,15 +85,18 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
     private func loadWithApi() {
         showHud(Constant.loading)
         guard let id = movie?.id else { return }
-        moviesRepository.getKeyTrailer(id: id){ [weak self] (resultKeys) in
+        moviesRepository.getKeyTrailer(id: id) {
+            [weak self] (resultKeys) in
             guard let `self` = self else { return }
             switch resultKeys {
             case .success(let keyRespone):
                 guard let keys = keyRespone?.keyTrailers else { return }
                 self.keys = keys
-                self.getTrailer()
-            case .failure( _):
-                print("ERROR KEY")
+                DispatchQueue.main.async {
+                    self.getTrailer()
+                }
+            case .failure(let error):
+                print("ERROR KEY \(error.debugDescription.description)")
             }
         }
         moviesRepository.getCredit(id: id) { [weak self] (resultCredits) in
@@ -107,9 +110,10 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
                 self.crews = crews
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+                    self.hideHUD()
                 }
-            case .failure( _):
-                print("ERROR CREDIT")
+            case .failure(let error):
+                print("ERROR CREDIT \(error.debugDescription.description)")
             }
         }
     }
@@ -117,7 +121,6 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
     private func getTrailer() {
         guard let key = keys.first?.key else { return }
         youtubePlayer.load(withVideoId: key)
-        self.hideHUD()
     }
     
     private func pushCreditDetail(credit: Credit?) {

@@ -144,7 +144,7 @@ extension TopFilmViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension TopFilmViewController: tableViewDelegate {
+extension TopFilmViewController: TableViewDelegate {
     func pushMovieDetail(movie: Movie) {
         let vc = MovieDetailViewController.instantiate()
         vc.movie = movie

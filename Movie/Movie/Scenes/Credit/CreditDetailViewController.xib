@@ -67,7 +67,10 @@
                     <rect key="frame" x="0.0" y="72" width="375" height="267"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="notFound" translatesAutoresizingMaskIntoConstraints="NO" id="GJ3-y5-BO2">
-                            <rect key="frame" x="8" y="8" width="150" height="251"/>
+                            <rect key="frame" x="8" y="8" width="150" height="199.5"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="GJ3-y5-BO2" secondAttribute="height" multiplier="3:4" id="Yna-mC-f2R"/>
+                            </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9QY-7c-86u">
                             <rect key="frame" x="174" y="8" width="197" height="24"/>
@@ -119,7 +122,6 @@
                         <constraint firstItem="x3u-BC-brH" firstAttribute="top" secondItem="UsF-kV-WUs" secondAttribute="bottom" constant="4" id="CgO-F3-Ezx"/>
                         <constraint firstItem="LQ2-GY-skn" firstAttribute="top" secondItem="VFc-Hd-R3F" secondAttribute="bottom" constant="4" id="I8r-lj-Dgq"/>
                         <constraint firstItem="GJ3-y5-BO2" firstAttribute="leading" secondItem="eYc-ih-VF7" secondAttribute="leading" constant="8" id="JW7-gY-V3A"/>
-                        <constraint firstItem="v7K-Nv-Fxu" firstAttribute="bottom" secondItem="GJ3-y5-BO2" secondAttribute="bottom" constant="8" id="QuO-Hy-URx"/>
                         <constraint firstItem="UsF-kV-WUs" firstAttribute="trailing" secondItem="9QY-7c-86u" secondAttribute="trailing" id="ac6-LK-50U"/>
                         <constraint firstItem="v7K-Nv-Fxu" firstAttribute="trailing" secondItem="x3u-BC-brH" secondAttribute="trailing" constant="8" id="bb0-jc-QqA"/>
                         <constraint firstItem="x3u-BC-brH" firstAttribute="leading" secondItem="9QY-7c-86u" secondAttribute="leading" id="cC4-Mf-jYc"/>

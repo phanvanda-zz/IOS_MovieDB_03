@@ -9,6 +9,7 @@ class Movie: BaseModel {
     var overview = ""
     var releaseDate = ""
     var popularity = 0
+    var backdropPath = ""
     
     // MARK: CREDIT
     var character = ""
@@ -25,5 +26,6 @@ class Movie: BaseModel {
         releaseDate <- map["release_date"]
         popularity <- map["popularity"]
         character <- map["character"]
+        backdropPath <- map["backdrop_path"]
     }
 }
