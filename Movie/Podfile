@@ -9,4 +9,5 @@ target 'Movie' do
   pod 'Cosmos'
   pod 'youtube-ios-player-helper'
   pod 'MBProgressHUD'
+  pod 'StatusBarNotifications'
 end

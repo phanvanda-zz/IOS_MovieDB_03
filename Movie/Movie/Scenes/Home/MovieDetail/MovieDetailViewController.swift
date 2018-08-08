@@ -3,6 +3,7 @@ import SDWebImage
 import Reusable
 import Cosmos
 import youtube_ios_player_helper
+import StatusBarNotifications
 
 final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
     private struct Constant {
@@ -31,6 +32,7 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
     @IBOutlet private weak var voteLabel: UILabel!
     @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var popularLabel: UILabel!
+    @IBOutlet private weak var likeButton: UIButton!
     
     // MARK: reviewTrailerView
     @IBOutlet private weak var heightConstraintView: NSLayoutConstraint!
@@ -48,6 +50,7 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
     var actors = [Credit]()
     var crews = [Credit]()
     var keys = [KeyTrailer]()
+    var flag = false
     private let moviesRepository: MovieRepository = MovieRepositoryImpl(api: APIService.share)
     static var sceneStoryboard = UIStoryboard(name: Storyboard.home, bundle: nil)
     
@@ -56,6 +59,10 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
         super.viewDidLoad()
         setup()
         loadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setupLike()
     }
     
     private func setup() {
@@ -140,6 +147,40 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
     @IBAction private func backTappedButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func likeTappedButton(_ sender: Any) {
+        checkLike()
+    }
+    
+    private func setupLike() {
+        guard let movieLike = movie else {
+            return
+        }
+        guard let _ = HandlingMoviesDatabase.shared.checkData(movie: movieLike) else {
+            likeButton.setImage(#imageLiteral(resourceName: "like_no"), for: .normal)
+            flag = false
+            return
+        }
+        likeButton.setImage(#imageLiteral(resourceName: "like_yes"), for: .normal)
+        flag = true
+    }
+    
+    private func checkLike() {
+        guard let movieLike = movie else {
+            return
+        }
+        if (!flag) {
+            flag = !flag
+            HandlingMoviesDatabase.shared.insertMovie(movie: movieLike)
+            likeButton.setImage(#imageLiteral(resourceName: "like_yes"), for: .normal)
+            StatusBarNotifications.show(withText: "The movie has been added to the favorites list", animation: .slideFromTop, backgroundColor: .black, textColor: ColorConstant.textNoti)
+        } else {
+            HandlingMoviesDatabase.shared.deteleMovie(movie: movieLike)
+            flag = !flag
+            likeButton.setImage(#imageLiteral(resourceName: "like_no"), for: .normal)
+            StatusBarNotifications.show(withText: "The movie has been removed from the favorites list", animation: .slideFromTop, backgroundColor: .black, textColor: ColorConstant.textNoti)
+        }
+    }
 }
 
 extension MovieDetailViewController: UITableViewDataSource, UITableViewDelegate {
@@ -154,7 +195,7 @@ extension MovieDetailViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: CreditTableViewCell.self) as CreditTableViewCell
         indexPath.section == 0 ? cell.setContentForCell(data: actors, title: Constant.actorStr) :
-        cell.setContentForCell(data: crews, title: Constant.crewStr)
+            cell.setContentForCell(data: crews, title: Constant.crewStr)
         cell.delegate = self
         return cell
     }

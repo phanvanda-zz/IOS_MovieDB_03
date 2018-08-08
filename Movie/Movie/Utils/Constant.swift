@@ -16,6 +16,7 @@ struct Storyboard {
     static let library = "Library"
     static let search = "Search"
     static let feedback = "Feedback"
+    
 }
 
 struct Storyboard_id {
@@ -32,6 +33,7 @@ struct cellConstaintSize {
     static let spaceItem = CGFloat(0)
     static let spaceLine = CGFloat(0)
     static let minusHeightTable = CGFloat(24)
+    static let minus2HeightTable = CGFloat(40)
 }
 
 struct IdentifierScreen {
@@ -39,3 +41,15 @@ struct IdentifierScreen {
     static let movieDetail = "MovieDetailViewController"
     static let credit = "CreditDetailViewController"
 }
+
+struct nameDatabase {
+    static let movieDatabase = "FavoriteMovies"
+}
+
+struct MovieInfoDB {
+    static let movieId = "movieId"
+    static let title = "title"
+    static let overview = "overview"
+    static let posterPath = "posterPath"
+}
+
