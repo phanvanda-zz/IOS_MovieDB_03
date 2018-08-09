@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -19,11 +19,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="226" height="330"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="TopFilmCollectionViewCell" image="notFound" translatesAutoresizingMaskIntoConstraints="NO" id="yLW-wO-rxE">
-                        <rect key="frame" x="12" y="4" width="202" height="258"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="TopFilmCollectionViewCell" translatesAutoresizingMaskIntoConstraints="NO" id="yLW-wO-rxE">
+                        <rect key="frame" x="12" y="4" width="202" height="266"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="aaaaaaa" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Px5-rC-W5c">
-                        <rect key="frame" x="8" y="294" width="210" height="20"/>
+                        <rect key="frame" x="8" y="302" width="210" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="2dC-2r-ef3"/>
                         </constraints>
@@ -31,8 +31,8 @@
                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Doc-zd-08u" customClass="CosmosView" customModule="Cosmos">
-                        <rect key="frame" x="12" y="268" width="202" height="20"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Doc-zd-08u" customClass="CosmosView" customModule="Cosmos">
+                        <rect key="frame" x="12" y="276" width="202" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="6oM-3L-bF0"/>
                         </constraints>
@@ -49,34 +49,34 @@
                             <userDefinedRuntimeAttribute type="color" keyPath="emptyColor">
                                 <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="starSize">
+                                <real key="value" value="15"/>
+                            </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
             </view>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="Doc-zd-08u" firstAttribute="top" secondItem="yLW-wO-rxE" secondAttribute="bottom" constant="6" id="1rc-Rb-kVn"/>
-                <constraint firstItem="Doc-zd-08u" firstAttribute="trailing" secondItem="yLW-wO-rxE" secondAttribute="trailing" id="3YR-tb-0pa"/>
-                <constraint firstAttribute="bottom" secondItem="Px5-rC-W5c" secondAttribute="bottom" constant="16" id="85h-Vu-8Rc"/>
-                <constraint firstItem="yLW-wO-rxE" firstAttribute="leading" secondItem="Px5-rC-W5c" secondAttribute="leading" constant="4" id="Gwp-ZM-MDo"/>
-                <constraint firstItem="Px5-rC-W5c" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="PLN-Sg-Tec"/>
-                <constraint firstAttribute="trailing" secondItem="Px5-rC-W5c" secondAttribute="trailing" constant="8" id="Sa1-p4-V9h"/>
-                <constraint firstItem="yLW-wO-rxE" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="4" id="aLk-5K-zsC"/>
-                <constraint firstItem="Doc-zd-08u" firstAttribute="leading" secondItem="yLW-wO-rxE" secondAttribute="leading" id="nwu-n6-rje"/>
+                <constraint firstItem="Doc-zd-08u" firstAttribute="trailing" secondItem="yLW-wO-rxE" secondAttribute="trailing" id="0zy-f7-ISK"/>
+                <constraint firstItem="yLW-wO-rxE" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="4" id="6Yy-0M-Fa3"/>
+                <constraint firstItem="Doc-zd-08u" firstAttribute="leading" secondItem="yLW-wO-rxE" secondAttribute="leading" id="HQJ-Rt-dmp"/>
+                <constraint firstItem="Px5-rC-W5c" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="Lp3-Wy-SAT"/>
+                <constraint firstItem="yLW-wO-rxE" firstAttribute="trailing" secondItem="Px5-rC-W5c" secondAttribute="trailing" constant="-4" id="PWh-BX-2n3"/>
+                <constraint firstItem="yLW-wO-rxE" firstAttribute="leading" secondItem="Px5-rC-W5c" secondAttribute="leading" constant="4" id="TH3-cy-TWm"/>
+                <constraint firstAttribute="bottom" secondItem="Px5-rC-W5c" secondAttribute="bottom" constant="8" id="jGN-cy-QqW"/>
                 <constraint firstItem="Px5-rC-W5c" firstAttribute="top" secondItem="Doc-zd-08u" secondAttribute="bottom" constant="6" id="pL7-sw-YdZ"/>
-                <constraint firstItem="yLW-wO-rxE" firstAttribute="trailing" secondItem="Px5-rC-W5c" secondAttribute="trailing" constant="-4" id="uHF-1c-ez1"/>
+                <constraint firstAttribute="trailing" secondItem="Px5-rC-W5c" secondAttribute="trailing" constant="8" id="qzV-Xd-Kea"/>
+                <constraint firstItem="Doc-zd-08u" firstAttribute="top" secondItem="yLW-wO-rxE" secondAttribute="bottom" constant="6" id="yc7-3d-WbU"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="50" height="179"/>
             <connections>
-                <outlet property="posterImageView" destination="yLW-wO-rxE" id="Iu6-J8-HBm"/>
-                <outlet property="starView" destination="Doc-zd-08u" id="eva-UL-Csg"/>
-                <outlet property="titleLabel" destination="Px5-rC-W5c" id="jJG-Ux-mxl"/>
+                <outlet property="posterImageView" destination="yLW-wO-rxE" id="kXo-1U-Hbq"/>
+                <outlet property="starView" destination="Doc-zd-08u" id="SRx-Ib-Xdp"/>
+                <outlet property="titleLabel" destination="Px5-rC-W5c" id="mdQ-kR-RRw"/>
             </connections>
-            <point key="canvasLocation" x="-208" y="9"/>
+            <point key="canvasLocation" x="-332" y="-78"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <image name="notFound" width="400" height="400"/>
-    </resources>
 </document>

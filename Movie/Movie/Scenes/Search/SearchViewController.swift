@@ -13,11 +13,13 @@ class SearchViewController: UIViewController, NibReusable {
     @IBOutlet private weak var nameScreen: UILabel!
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var collectionView: UICollectionView!
-    let plusWidthCollection = CGFloat(32)
     var movies = [Movie]()
     var currentMovieArray = [Movie]()
     var searchList = [String]()
     private let movieRepository: MovieRepository = MovieRepositoryImpl(api: APIService.share)
+    var work = DispatchWorkItem {
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,13 +47,19 @@ class SearchViewController: UIViewController, NibReusable {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let text = searchBar.text else {
-            movies.removeAll()
-            collectionView.reloadData()
-            return
+        collectionView.isUserInteractionEnabled = false
+        work.cancel()
+        work = DispatchWorkItem {
+            guard let text = searchBar.text else {
+                self.movies.removeAll()
+                self.collectionView.reloadData()
+                return
+            }
+            self.movies.removeAll()
+            self.loadData(query: text)
+            self.collectionView.isUserInteractionEnabled = true
         }
-        movies.removeAll()
-        loadData(query: text)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: work)
     }
     
     private func loadData(query: String) {
@@ -67,6 +75,7 @@ class SearchViewController: UIViewController, NibReusable {
     
     private func setupSearchBar() {
         searchBar.delegate = self
+        searchBar.returnKeyType = .done
     }
     
     func setData(moviesSearchByQueryResponse: SearchMoviesResponse?) {
@@ -79,7 +88,6 @@ class SearchViewController: UIViewController, NibReusable {
         }
         DispatchQueue.main.async {
             self.collectionView.reloadData()
-            print("Collection")
         }
     }
     
@@ -87,6 +95,10 @@ class SearchViewController: UIViewController, NibReusable {
         let vc = MovieDetailViewController.instantiate()
         vc.movie = movie
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        searchBar.endEditing(true)
     }
 }
 
@@ -105,7 +117,7 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.width) / 4 + self.plusWidthCollection, height: collectionView.frame.height / 3)
+        return CGSize(width: (collectionView.frame.width) / 4 + cellConstaintSize.minusHeightTable, height: collectionView.frame.height / 3)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -126,6 +138,8 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
 }
 
 extension SearchViewController: UISearchBarDelegate {
-    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+    }
 }
 

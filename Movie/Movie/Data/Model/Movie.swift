@@ -26,4 +26,11 @@ class Movie: BaseModel {
         popularity <- map["popularity"]
         character <- map["character"]
     }
+    
+    init(movieId: Int, title: String, posterPath: String, overview: String) {
+        self.id = movieId
+        self.title = title
+        self.posterPath = posterPath
+        self.overview = overview
+    }
 }
