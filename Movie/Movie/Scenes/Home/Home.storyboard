@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -209,7 +209,10 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LSQ-LF-UU9">
                                         <rect key="frame" x="327" y="16" width="40" height="40"/>
-                                        <state key="normal" image="love_no"/>
+                                        <state key="normal" image="like_no"/>
+                                        <connections>
+                                            <action selector="likeTappedButton:" destination="FXH-an-w4W" eventType="touchUpInside" id="Dcr-y1-JhK"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -426,6 +429,7 @@
                         <outlet property="heightConstraintView" destination="F5N-vv-Lk4" id="P1A-dI-dXu"/>
                         <outlet property="heightReviewView" destination="Kyt-Gj-lZM" id="IOI-wy-NB1"/>
                         <outlet property="infoView" destination="iHA-Do-LOb" id="XPT-Dj-Lm4"/>
+                        <outlet property="likeButton" destination="LSQ-LF-UU9" id="YNa-17-FKj"/>
                         <outlet property="popularLabel" destination="xGt-GF-d4b" id="i4E-C8-zpk"/>
                         <outlet property="posterImageView" destination="zpc-hQ-KPF" id="yHG-h5-65f"/>
                         <outlet property="reviewLabel" destination="z17-NA-h6Y" id="EK7-p5-O39"/>
@@ -445,6 +449,6 @@
     </scenes>
     <resources>
         <image name="back" width="64" height="64"/>
-        <image name="love_no" width="32" height="32"/>
+        <image name="like_no" width="32" height="32"/>
     </resources>
 </document>

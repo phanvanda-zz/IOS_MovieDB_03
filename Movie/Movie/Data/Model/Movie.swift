@@ -28,4 +28,11 @@ class Movie: BaseModel {
         character <- map["character"]
         backdropPath <- map["backdrop_path"]
     }
+    
+    init(movieId: Int, title: String, posterPath: String, overview: String) {
+        self.id = movieId
+        self.title = title
+        self.posterPath = posterPath
+        self.overview = overview
+    }
 }

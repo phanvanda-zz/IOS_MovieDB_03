@@ -15,4 +15,5 @@ target 'Movie' do
   pod 'youtube-ios-player-helper'
   pod 'MBProgressHUD'
   pod 'iCarousel'
+  pod 'StatusBarNotifications'
 end
