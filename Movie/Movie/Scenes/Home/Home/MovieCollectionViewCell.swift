@@ -31,7 +31,7 @@ class MovieCollectionViewCell: UICollectionViewCell, NibReusable {
         self.titleLabel.text = movie?.title
         guard let poster = movie?.posterPath, let vote = movie?.vote else { return }
         let url = URL(string: URLs.posterImage + poster)
-        posterImageView.sd_setImage(with: url, completed: nil)
+        posterImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "not_found"), options: .allowInvalidSSLCertificates, completed: nil)
         cosmosView.rating = vote / 2
     }
 }

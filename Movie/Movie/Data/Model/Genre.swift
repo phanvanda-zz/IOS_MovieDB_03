@@ -10,7 +10,7 @@ import ObjectMapper
 
 class Genre: BaseModel {
     var id = 0
-    var name: String?
+    var name = ""
     
     required init?(map: Map) {
         mapping(map: map)
@@ -20,4 +20,11 @@ class Genre: BaseModel {
         id <- map["id"]
         name <- map["name"]
     }
+    
+    init(id: Int, name: String) {
+        self.id = id
+        self.name = name
+    }
+    
+    init() {}
 }

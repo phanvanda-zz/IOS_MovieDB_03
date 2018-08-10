@@ -28,7 +28,7 @@ class CreditCollectionViewCell: UICollectionViewCell, NibReusable {
                 return
         }
         self.credit = credit
-        profilePathImageView.sd_setImage(with: url, completed: nil)
+        profilePathImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "not_found"), options: .allowInvalidSSLCertificates, completed: nil)
         nameLabel.text = name
     }
 }

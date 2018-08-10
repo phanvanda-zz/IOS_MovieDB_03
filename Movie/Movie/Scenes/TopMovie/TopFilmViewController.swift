@@ -19,7 +19,7 @@ class TopFilmViewController: UIViewController {
     var upcommingFilm = [Movie]()
     private let movieRepository: MovieRepository = MovieRepositoryImpl(api: APIService.share)
     private struct Constaint {
-        static let loadingStr = "Loading ..."
+        static let heighTableViewCell: CGFloat = 220
     }
     
     enum TypeFilm: Int {
@@ -36,6 +36,19 @@ class TopFilmViewController: UIViewController {
                 return "Popular"
             case .upcoming:
                 return "Upcoming"
+            case .all:
+                return ""
+            }
+        }
+        
+        var getURL: String {
+            switch self {
+            case .topRate:
+                return URLs.apiMovieTopRatedURL
+            case .popular:
+                return URLs.apiMoviePopularURL
+            case .upcoming:
+                return URLs.apiMovieUpcomingURL
             case .all:
                 return ""
             }
@@ -68,8 +81,8 @@ class TopFilmViewController: UIViewController {
     }
     
     func loadDataTopRate() {
-        showHud(Constaint.loadingStr)
-        self.movieRepository.getTopMoviesList(completion: { [weak self] (resultList) in
+        showHud(ConstantString.loadStr)
+        self.movieRepository.getTopMoviesList(page: 1, completion: { [weak self] (resultList) in
             guard let `self` = self else { return }
             switch resultList {
             case .success(let moviesTopListResponse):
@@ -88,8 +101,8 @@ class TopFilmViewController: UIViewController {
     }
     
     func loadDataPopular() {
-        showHud(Constaint.loadingStr)
-        movieRepository.getPopularMoviesList(completion: { [weak self] (resultList) in
+        showHud(ConstantString.loadStr)
+        movieRepository.getPopularMoviesList(page: 1, completion: { [weak self] (resultList) in
             guard let `self` = self else { return }
             switch resultList {
             case .success(let moviesPopularListResponse):
@@ -107,8 +120,8 @@ class TopFilmViewController: UIViewController {
     }
     
     func loadDataUpcoming() {
-        showHud(Constaint.loadingStr)
-        self.movieRepository.getUpcomingMoviesList(completion: { [weak self] (resultList) in
+        showHud(ConstantString.loadStr)
+        self.movieRepository.getUpcomingMoviesList(page: 1, completion: { [weak self] (resultList) in
             guard let `self` = self else { return }
             switch resultList {
             case .success(let moviesUpcomingListResponse):
@@ -132,7 +145,7 @@ extension TopFilmViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.bounds.height / 2
+        return Constaint.heighTableViewCell
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -141,23 +154,23 @@ extension TopFilmViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         if arrFilm.count >= 3 {
-            cell.updateCell(movies: arrFilm[indexPath.row], namelbl: type.getMessage)
+            cell.updateCell(movies: arrFilm[indexPath.row], namelbl: type.getMessage, url: type.getURL)
         }
         cell.delegate = self
         return cell
     }
 }
 
-extension TopFilmViewController: TableViewDelegate {
-    func pushMovieDetail(movie: Movie) {
-        let vc = MovieDetailViewController.instantiate()
-        vc.movie = movie
-        self.present(vc, animated: true, completion: nil)
+extension TopFilmViewController: TopTableViewDelegate {
+    func loadmoreAction(url: String, name: String) {
+        let loadmoreVC = LoadMoreViewController.instantiate()
+        loadmoreVC.reloadDataTopMovies(url: url, name: name)
+        presentDetail(loadmoreVC)
     }
     
-    func loadmoreAction(name: String, movies: [Movie]) {
-        let vc = LoadMoreViewController.instantiate()
-        vc.reloadData(name: name, movies: movies)
-        present(vc, animated: true, completion: nil)
+    func pushMovieDetail(movie: Movie) {
+        let movieDeitalVC = MovieDetailViewController.instantiate()
+        movieDeitalVC.movie = movie
+        presentDetail(movieDeitalVC)
     }
 }

@@ -49,8 +49,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QXT-BZ-U6h">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TOP FILM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pAb-36-WkO">
-                                        <rect key="frame" x="143" y="32.5" width="90" height="24"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SEARCH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pAb-36-WkO">
+                                        <rect key="frame" x="147" y="32.5" width="82" height="24"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                         <color key="textColor" red="1" green="0.25098039220000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -83,6 +83,7 @@
                     <connections>
                         <outlet property="collectionView" destination="dBh-cc-hr5" id="wBH-05-b2T"/>
                         <outlet property="searchBar" destination="0e9-9Y-tFq" id="cza-S5-1Ip"/>
+                        <outlet property="titleTopView" destination="QXT-BZ-U6h" id="je0-Ut-rKd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yIr-Hy-I5M" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -44,4 +44,6 @@ class Movie: BaseModel {
         self.releaseDate = date
         self.popularity = popularity
     }
+    
+    init() {}
 }

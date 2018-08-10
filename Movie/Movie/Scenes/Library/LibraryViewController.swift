@@ -13,17 +13,31 @@ import StatusBarNotifications
 class LibraryViewController: UIViewController, NibReusable {
     var favoriteListMovies = [Movie]()
     @IBOutlet private weak var favoriteTableView: UITableView!
+    @IBOutlet private weak var topView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         getData()
+        setupUILine(view: topView)
     }
     
     private func setup() {
         self.favoriteTableView.delegate = self
         self.favoriteTableView.dataSource = self
         self.favoriteTableView.register(cellType: FavoriteTableViewCell.self)
+    }
+    
+    private func setupLine(view: UIView) {
+        let lineView = UIView()
+        lineView.backgroundColor = ColorConstant.lineColor
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(lineView)
+        
+        lineView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        lineView.topAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        lineView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        lineView.heightAnchor.constraint(equalToConstant: 1).isActive = true
     }
     
     private func getData() {
@@ -51,7 +65,7 @@ extension LibraryViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.bounds.height / 3 - cellConstaintSize.minusHeightTable
+        return sizeTableView.heighTableViewCell
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

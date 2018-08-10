@@ -30,13 +30,13 @@ class CreditDetailTableViewCell: UITableViewCell, NibReusable {
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-
+    
     func updateCell(movie: Movie) {
         let poster = movie.posterPath
         let vote = movie.vote
         let url = URL(string: URLs.posterImage + poster)
         self.movie = movie
-        backdropImageView.sd_setImage(with: url, completed: nil)
+        backdropImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "not_found"), options: .allowInvalidSSLCertificates, completed: nil)
         nameLabel.text = movie.title
         voteLabel.text = "( \(vote) )"
         dateLabel.text = ConstantString.date + movie.releaseDate

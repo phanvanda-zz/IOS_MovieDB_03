@@ -16,15 +16,20 @@ typealias completionUpcomingMovies = (BaseResult<MoviesUpcomingListResponse>) ->
 typealias completionSearchMovies = (BaseResult<SearchMoviesResponse>) -> Void
 typealias completionIdTrailler = (BaseResult<KeyTrailerResponse>) -> Void
 typealias completionCredit = (BaseResult<CreditResponse>) -> Void
+typealias completiongetTopMoviesScreen = (BaseResult<MoviesUpcomingListResponse>) -> Void
 
 protocol MovieRepository {
+    func getTopMoviesScreen(page: Int,
+                            url: String,
+                            completion: @escaping completiongetTopMoviesScreen)
+    
     func getMoviesList(id: Int, completion: @escaping completionMovies)
     
-    func getTopMoviesList(completion: @escaping completionTopMovies)
+    func getTopMoviesList(page: Int, completion: @escaping completionTopMovies)
     
-    func getPopularMoviesList(completion: @escaping completionPopularMovies)
+    func getPopularMoviesList(page: Int, completion: @escaping completionPopularMovies)
     
-    func getUpcomingMoviesList(completion: @escaping completionUpcomingMovies)
+    func getUpcomingMoviesList(page: Int, completion: @escaping completionUpcomingMovies)
     
     func getKeyTrailer(id: Int, completion: @escaping completionIdTrailler)
     
@@ -39,9 +44,9 @@ class MovieRepositoryImpl: MovieRepository {
     required init(api: APIService) {
         self.api = api
     }
-    
+
     static let sharedInstance: MovieRepository = MovieRepositoryImpl(api: APIService.share)
-    
+    //  completionMovies = (BaseResult<MoviesResponse>) -> Void
     func getMoviesList(id: Int, completion: @escaping completionMovies) {
         let input = GetMoviesRequest(id: id, page: 1)
         api?.request(input: input) { (object: MoviesResponse?, error) in
@@ -87,8 +92,8 @@ class MovieRepositoryImpl: MovieRepository {
         }
     }
     
-    func getTopMoviesList(completion: @escaping completionTopMovies) {
-        let input = GetMoviesTopListRequest()
+    func getTopMoviesList(page: Int, completion: @escaping completionTopMovies) {
+        let input = GetMoviesTopListRequest(page: page)
         api?.request(input: input) { (object: MoviesTopListResponse?, error) in
             if let object = object {
                 completion(.success(object))
@@ -100,8 +105,8 @@ class MovieRepositoryImpl: MovieRepository {
         }
     }
     
-    func getPopularMoviesList(completion: @escaping completionPopularMovies) {
-        let input = GetMoviesPopularListRequest()
+    func getPopularMoviesList(page: Int, completion: @escaping completionPopularMovies) {
+        let input = GetMoviesPopularListRequest(page: page)
         api?.request(input: input) { (object: MoviesPopularListResponse?, error) in
             if let object = object {
                 completion(.success(object))
@@ -113,8 +118,23 @@ class MovieRepositoryImpl: MovieRepository {
         }
     }
     
-    func getUpcomingMoviesList(completion: @escaping completionUpcomingMovies) {
-        let input = GetMoviesUpcomingListRequest()
+    func getUpcomingMoviesList(page: Int, completion: @escaping completionUpcomingMovies) {
+        let input = GetMoviesUpcomingListRequest(page: page)
+        api?.request(input: input) { (object: MoviesUpcomingListResponse?, error) in
+            if let object = object {
+                completion(.success(object))
+            } else if let error = error {
+                completion(.failure(error: error))
+            } else {
+                completion(.failure(error: nil))
+            }
+        }
+    }
+    
+    func getTopMoviesScreen(page: Int,
+                            url: String,
+                            completion: @escaping completiongetTopMoviesScreen) {
+        let input = GetTopMoviesScreenRequest(url: url, page: page)
         api?.request(input: input) { (object: MoviesUpcomingListResponse?, error) in
             if let object = object {
                 completion(.success(object))

@@ -19,9 +19,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="320.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTQ-a7-fCe">
-                        <rect key="frame" x="16" y="12" width="208" height="19.5"/>
-                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genre" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTQ-a7-fCe">
+                        <rect key="frame" x="8" y="12" width="216" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -41,7 +41,7 @@
                         </connections>
                     </button>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Q7G-CZ-o1i">
-                        <rect key="frame" x="16" y="46" width="296" height="266.5"/>
+                        <rect key="frame" x="0.0" y="46" width="320" height="266.5"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="6FB-XB-PTC">
                             <size key="itemSize" width="50" height="50"/>
@@ -58,12 +58,12 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="pgn-J7-0NY" secondAttribute="trailing" constant="8" id="CiU-kZ-fpt"/>
-                    <constraint firstItem="aTQ-a7-fCe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="J9C-NB-UZ6"/>
+                    <constraint firstItem="Q7G-CZ-o1i" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="I5Q-p3-nk0"/>
+                    <constraint firstItem="aTQ-a7-fCe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="J9C-NB-UZ6"/>
                     <constraint firstItem="Q7G-CZ-o1i" firstAttribute="top" secondItem="pgn-J7-0NY" secondAttribute="bottom" id="NIz-sl-lvU"/>
-                    <constraint firstItem="Q7G-CZ-o1i" firstAttribute="trailing" secondItem="pgn-J7-0NY" secondAttribute="trailing" id="Xhm-88-LRa"/>
-                    <constraint firstItem="Q7G-CZ-o1i" firstAttribute="leading" secondItem="aTQ-a7-fCe" secondAttribute="leading" id="YDF-q3-Csj"/>
                     <constraint firstAttribute="bottom" secondItem="Q7G-CZ-o1i" secondAttribute="bottom" constant="8" id="bWf-tC-pIL"/>
                     <constraint firstItem="pgn-J7-0NY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="guJ-WC-oY5"/>
+                    <constraint firstAttribute="trailing" secondItem="Q7G-CZ-o1i" secondAttribute="trailing" id="pk3-vA-u8G"/>
                     <constraint firstItem="aTQ-a7-fCe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="tU2-uO-AG8"/>
                     <constraint firstItem="pgn-J7-0NY" firstAttribute="leading" secondItem="aTQ-a7-fCe" secondAttribute="trailing" constant="8" id="vCp-3R-zgl"/>
                 </constraints>

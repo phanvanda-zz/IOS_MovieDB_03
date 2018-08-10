@@ -11,9 +11,10 @@ import ObjectMapper
 import Alamofire
 
 class GetMoviesUpcomingListRequest: BaseRequest {
-    required init() {
+    required init(page: Int) {
         let body: [String: Any] = [
             "api_key": APIKey.key,
+            "page" : page,
             "language": "en-US"
         ]
         let url = URLs.apiMovieUpcomingURL

@@ -9,29 +9,28 @@
 import UIKit
 import iCarousel
 
+typealias MoviesGenre = (genre: Genre,movies: [Movie])
+
 class HomeViewController: UIViewController {
     // MARK: OUTLET
     @IBOutlet private weak var carouView: iCarousel!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var titleScreenLabel: UILabel!
     @IBOutlet private weak var titleView: UIView!
+    @IBOutlet weak var heightCarouViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var topTableViewConstraint: NSLayoutConstraint!
     
     // MARK: VARIABLES
-    var genres = [Genre]()
-    var moviesDic = [String : [Movie]]()
-    var moviesShow = [Movie]()
+    var moviesGenreArr = [MoviesGenre]()
+    var moviesTopRate = [Movie]()
     var timer = Timer()
+    var pointTapScroll = CGFloat(0.0)
     private let homeRepository: HomeRepository = HomeRepositoryImpl(api: APIService.share)
     private let movieRepository: MovieRepository = MovieRepositoryImpl(api: APIService.share)
     
     private struct Constant {
-        static let spaceCollectionCell = CGFloat(8)
-        static let heightTableCell = CGFloat(24)
-        static let spaceItem = CGFloat(0)
-        static let spaceLine = CGFloat(0)
-        static let ratio: CGFloat = 0.7
-        static let ratioWidthViewCarousel: CGFloat = 0.9
-        static let ratioHeighViewCarousel: CGFloat = 0.9
+        static let ratioWidthViewCarousel: CGFloat = 0.8
+        static let ratioHeighViewCarousel: CGFloat = 0.8
         static let ratioBotViewCarousel: CGFloat = 0.2
         static let heighTitleLabel: CGFloat = 20
         static let colorBotView = UIColor(red: 40/255, green: 40/255, blue: 40/255, alpha: 0.6)
@@ -39,6 +38,10 @@ class HomeViewController: UIViewController {
         static let colorTitle = UIColor.white
         static let timeWait: Double = 3.0
         static let timeScroll: Double = 1.0
+        static let timeAnimationDurationUp: Double = 0.5
+        static let timeAnimationDurationDown: Double = 0.3
+        static let heightCarouView: CGFloat = 180
+        static let heighTableViewCell: CGFloat = 220
     }
     
     override func viewDidLoad() {
@@ -54,22 +57,20 @@ class HomeViewController: UIViewController {
         timer = Timer.scheduledTimer(timeInterval: Constant.timeWait, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
         carouView.type = .cylinder
     }
-   
+    
     private func loadData() {
         showHud(ConstantString.loadStr)
         homeRepository.getGenres { [weak self] (resultGenres) in
             guard let `self` = self else { return }
-            self.hideHUD()
             switch resultGenres {
             case .success(let genreRespone):
                 guard let result = genreRespone?.genres else { return }
-                for item in result {
-                    self.homeRepository.getMovies(id: item.id, page: 1) { (resultMoveList) in
+                for genre in result {
+                    self.homeRepository.getMovies(id: genre.id, page: 1) { (resultMoveList) in
                         switch resultMoveList {
                         case .success(let moviesListRespone):
-                            guard let id = moviesListRespone?.id,
-                                let movies = moviesListRespone?.movies else { return }
-                            self.moviesDic[String(id)] = movies
+                            guard let movies = moviesListRespone?.movies else { return }
+                            self.moviesGenreArr.append(MoviesGenre(genre, movies))
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
                             }
@@ -78,7 +79,7 @@ class HomeViewController: UIViewController {
                         }
                     }
                 }
-                self.genres = result
+                self.hideHUD()
             case .failure(let error):
                 print("ERROR GENRES \(error.debugDescription.description)")
             }
@@ -88,50 +89,71 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return genres.count
+        return moviesGenreArr.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.bounds.height * Constant.ratio
+        return Constant.heighTableViewCell
     }
 }
 
 extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: GenreTableViewCell.self) as GenreTableViewCell
-        let item = genres[indexPath.row]
-        let name = item.name
-        let idStr = String(item.id)
-        let movies = moviesDic[idStr]
-        cell.updateCell(name: name, movies: movies)
+        let item = moviesGenreArr[indexPath.row]
+        cell.updateCell(moviesGenre: item)
         cell.delegate = self
         return cell
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        pointTapScroll = scrollView.contentOffset.y
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > pointTapScroll { // scroll up
+            UIView.animate(withDuration: Constant.timeAnimationDurationUp) {
+                self.topTableViewConstraint.constant = 0.0
+                self.heightCarouViewConstraint.constant = 0.0
+                self.carouView.alpha = 0
+                self.view.layoutIfNeeded()
+            }
+        } else { // scroll down
+            UIView.animate(withDuration: Constant.timeAnimationDurationDown) {
+                if scrollView.contentOffset.y == 0 {
+                    self.carouView.alpha = 1
+                    self.heightCarouViewConstraint.constant =  Constant.heightCarouView
+                    self.carouView.reloadData()
+                }
+                self.view.layoutIfNeeded()
+            }
+        }
     }
 }
 
 extension HomeViewController: TableViewDelegate {
+    func loadmoreAction(genre: Genre) {
+        let loadMoreVC = LoadMoreViewController.instantiate()
+        loadMoreVC.reloadData(genre: genre)
+        presentDetail(loadMoreVC)
+    }
+    
     func pushMovieDetail(movie: Movie) {
         let vc = MovieDetailViewController.instantiate()
         vc.movie = movie
-        present(vc, animated: true, completion: nil)
-    }
-    
-    func loadmoreAction(name: String, movies: [Movie]) {
-        let vc = LoadMoreViewController.instantiate()
-        vc.reloadData(name: name, movies: movies)
-        present(vc, animated: true, completion: nil)
+        presentDetail(vc)
     }
 }
 
 extension HomeViewController: iCarouselDelegate, iCarouselDataSource {
     func loadDataTopRate() {
-        self.movieRepository.getTopMoviesList() {
+        self.movieRepository.getTopMoviesList(page: 1) {
             [weak self] (resultList) in
             guard let `self` = self else { return }
             switch resultList {
             case .success(let moviesTopListResponse):
                 guard let movies = moviesTopListResponse?.movies else { return }
-                self.moviesShow = movies
+                self.moviesTopRate = movies
                 DispatchQueue.main.async {
                     self.carouView.reloadData()
                 }
@@ -142,7 +164,7 @@ extension HomeViewController: iCarouselDelegate, iCarouselDataSource {
     }
     
     func numberOfItems(in carousel: iCarousel) -> Int {
-        return moviesShow.count
+        return moviesTopRate.count
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
@@ -172,7 +194,7 @@ extension HomeViewController: iCarouselDelegate, iCarouselDataSource {
         view.addSubview(imageView)
         view.addSubview(botView)
         view.addSubview(titleLable)
-        let item = moviesShow[index]
+        let item = moviesTopRate[index]
         let url = URL(string: URLs.backdropImage + item.backdropPath)
         imageView.sd_setImage(with: url, completed: nil)
         titleLable.text = item.title
@@ -195,6 +217,6 @@ extension HomeViewController: iCarouselDelegate, iCarouselDataSource {
     }
     
     func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
-        pushMovieDetail(movie: moviesShow[index])
+        pushMovieDetail(movie: moviesTopRate[index])
     }
 }

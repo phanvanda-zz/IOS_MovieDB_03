@@ -108,12 +108,17 @@ class CreditDetailViewController: UIViewController, NibReusable {
     func pushMovieDetail(movie: Movie) {
         let movieVC = MovieDetailViewController.instantiate()
         movieVC.movie = movie
-        present(movieVC, animated: true, completion: nil)
+        presentDetail(movieVC)
     }
     
-    @IBAction func backTappedButton(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+    @IBAction func backTappedButton(_ sender: UIButton) {
+        dismissDetail()
     }
+    
+    @IBAction func swipeBack(_ sender: Any) {
+        dismissDetail()
+    }
+    
 }
 
 extension CreditDetailViewController: UITableViewDataSource, UITableViewDelegate {

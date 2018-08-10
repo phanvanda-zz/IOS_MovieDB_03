@@ -54,6 +54,7 @@
                     </view>
                     <connections>
                         <outlet property="favoriteTableView" destination="bhQ-ji-reO" id="8Gi-H6-kAD"/>
+                        <outlet property="topView" destination="DVD-ZG-hrf" id="TCM-cP-eJx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XBE-On-CdD" userLabel="First Responder" sceneMemberID="firstResponder"/>

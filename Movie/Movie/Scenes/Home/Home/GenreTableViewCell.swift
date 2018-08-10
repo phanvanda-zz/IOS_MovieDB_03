@@ -10,7 +10,7 @@ import UIKit
 import Reusable
 
 protocol TableViewDelegate: class {
-    func loadmoreAction(name: String, movies: [Movie])
+    func loadmoreAction(genre: Genre)
     func pushMovieDetail(movie: Movie)
 }
 
@@ -23,16 +23,17 @@ class GenreTableViewCell: UITableViewCell, NibReusable {
     
     // MARK: VARIABLES
     private var movies = [Movie]()
-    private var name = ""
+    private var genre = Genre()
     weak var delegate: TableViewDelegate?
     private let moviesListRepository: MovieRepository = MovieRepositoryImpl(api: APIService.share)
     
-    func updateCell(name: String?, movies: [Movie]?) {
-        guard let movies = movies, let name = name else {
-            return
+    func updateCell(moviesGenre: MoviesGenre?) {
+        guard let genre = moviesGenre?.genre,
+            let movies = moviesGenre?.movies else {
+                return
         }
-        name_Genre_Label.text = name
-        self.name = name
+        name_Genre_Label.text = genre.name
+        self.genre = genre
         self.movies = movies
         self.collectionView.reloadData()
     }
@@ -43,7 +44,7 @@ class GenreTableViewCell: UITableViewCell, NibReusable {
     }
     
     @IBAction func loadmoreActionButton(_ sender: Any) {
-        delegate?.loadmoreAction(name: name, movies: movies)
+        delegate?.loadmoreAction(genre: genre)
     }
     
     func setup() {
@@ -65,11 +66,11 @@ extension GenreTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.width) / 4 + 6 * cellConstaintSize.spaceCollectionCell , height: collectionView.frame.height)
+        return CGSize(width: (collectionView.frame.width) / 3 - sizeCollectionView.spaceItem , height: collectionView.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return cellConstaintSize.spaceCollectionCell
+        return sizeCollectionView.spaceItem
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

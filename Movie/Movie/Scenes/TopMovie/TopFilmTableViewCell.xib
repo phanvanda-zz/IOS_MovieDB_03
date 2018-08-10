@@ -20,14 +20,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="320.5"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DKD-F0-lg1">
-                        <rect key="frame" x="8" y="12" width="216" height="24"/>
-                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top rate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DKD-F0-lg1">
+                        <rect key="frame" x="8" y="12" width="216" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="bNc-nz-Wq6">
-                        <rect key="frame" x="8" y="46" width="304" height="266.5"/>
+                        <rect key="frame" x="0.0" y="46" width="320" height="266.5"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="xmP-7Y-WKv">
                             <size key="itemSize" width="50" height="50"/>
@@ -57,10 +57,10 @@
                     <constraint firstItem="DKD-F0-lg1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="25W-wN-JWf"/>
                     <constraint firstItem="0r7-Z0-JpE" firstAttribute="leading" secondItem="DKD-F0-lg1" secondAttribute="trailing" constant="8" id="9za-xe-ZRB"/>
                     <constraint firstItem="bNc-nz-Wq6" firstAttribute="top" secondItem="0r7-Z0-JpE" secondAttribute="bottom" id="Jis-QS-juZ"/>
-                    <constraint firstItem="bNc-nz-Wq6" firstAttribute="trailing" secondItem="0r7-Z0-JpE" secondAttribute="trailing" id="USt-nZ-Wge"/>
-                    <constraint firstItem="bNc-nz-Wq6" firstAttribute="leading" secondItem="DKD-F0-lg1" secondAttribute="leading" id="WKc-yH-dw0"/>
+                    <constraint firstItem="bNc-nz-Wq6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="bOY-Wk-QHN"/>
                     <constraint firstAttribute="bottom" secondItem="bNc-nz-Wq6" secondAttribute="bottom" constant="8" id="hmF-na-LVA"/>
                     <constraint firstItem="DKD-F0-lg1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="lRk-bU-c6H"/>
+                    <constraint firstAttribute="trailing" secondItem="bNc-nz-Wq6" secondAttribute="trailing" id="rd9-IA-7IK"/>
                     <constraint firstItem="0r7-Z0-JpE" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="8" id="v12-Du-aRn"/>
                     <constraint firstItem="0r7-Z0-JpE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="z31-pz-1Zg"/>
                 </constraints>

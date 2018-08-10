@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -20,35 +20,69 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ztr-dZ-gip">
-                        <rect key="frame" x="10" y="10" width="110" height="115.5"/>
+                        <rect key="frame" x="10" y="10" width="110" height="109.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="110" id="psp-Su-0Uy"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DQc-Jt-lwm">
-                        <rect key="frame" x="140" y="10" width="209" height="24"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DQc-Jt-lwm">
+                        <rect key="frame" x="140" y="10" width="209" height="18"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                        <color key="textColor" red="1" green="0.54019108810000005" blue="0.96850592550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5kS-zz-Pqi" customClass="CosmosView" customModule="Cosmos">
+                        <rect key="frame" x="140" y="35" width="209" height="20"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="ipc-nt-UP8"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="filledColor">
+                                <color key="value" red="1" green="0.54019108810000005" blue="0.96850592550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="emptyColor">
+                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="filledBorderColor">
+                                <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="emptyBorderColor">
+                                <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Review" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sxT-sv-vAY">
+                        <rect key="frame" x="140" y="54.5" width="209" height="71"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sxT-sv-vAY">
-                        <rect key="frame" x="140" y="42" width="209" height="83"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lBe-xN-Npg">
+                        <rect key="frame" x="140" y="30" width="209" height="1"/>
+                        <color key="backgroundColor" red="1" green="0.54019108810000005" blue="0.96850592550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="4uG-go-r9G"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="lBe-xN-Npg" firstAttribute="leading" secondItem="DQc-Jt-lwm" secondAttribute="leading" id="5h9-Hn-N6t"/>
+                    <constraint firstItem="lBe-xN-Npg" firstAttribute="top" secondItem="DQc-Jt-lwm" secondAttribute="bottom" constant="2" id="8mM-bF-1Hp"/>
+                    <constraint firstItem="5kS-zz-Pqi" firstAttribute="leading" secondItem="DQc-Jt-lwm" secondAttribute="leading" id="AJY-ft-yTd"/>
+                    <constraint firstItem="lBe-xN-Npg" firstAttribute="trailing" secondItem="DQc-Jt-lwm" secondAttribute="trailing" id="HuS-GA-rO8"/>
                     <constraint firstItem="ztr-dZ-gip" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="S4B-65-P9Z"/>
                     <constraint firstItem="sxT-sv-vAY" firstAttribute="leading" secondItem="ztr-dZ-gip" secondAttribute="trailing" constant="20" id="Zhz-rj-z0o"/>
                     <constraint firstItem="DQc-Jt-lwm" firstAttribute="leading" secondItem="ztr-dZ-gip" secondAttribute="trailing" constant="20" id="fLo-J7-RbN"/>
+                    <constraint firstItem="5kS-zz-Pqi" firstAttribute="trailing" secondItem="DQc-Jt-lwm" secondAttribute="trailing" id="fOR-zp-r6W"/>
                     <constraint firstItem="ztr-dZ-gip" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="gQD-y2-MG0"/>
+                    <constraint firstItem="5kS-zz-Pqi" firstAttribute="top" secondItem="lBe-xN-Npg" secondAttribute="bottom" constant="4" id="ig9-97-mgQ"/>
                     <constraint firstAttribute="trailing" secondItem="sxT-sv-vAY" secondAttribute="trailing" constant="10" id="laK-zv-U5j"/>
                     <constraint firstAttribute="trailing" secondItem="DQc-Jt-lwm" secondAttribute="trailing" constant="10" id="le1-CF-d0d"/>
+                    <constraint firstItem="sxT-sv-vAY" firstAttribute="top" secondItem="5kS-zz-Pqi" secondAttribute="bottom" id="o9v-CD-IaM"/>
                     <constraint firstItem="DQc-Jt-lwm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="tH0-70-96k"/>
                     <constraint firstAttribute="bottom" secondItem="sxT-sv-vAY" secondAttribute="bottom" constant="10" id="vN1-ZO-HNn"/>
-                    <constraint firstAttribute="bottom" secondItem="ztr-dZ-gip" secondAttribute="bottom" constant="10" id="yDk-GO-f0h"/>
-                    <constraint firstItem="sxT-sv-vAY" firstAttribute="top" secondItem="DQc-Jt-lwm" secondAttribute="bottom" constant="8" id="yj6-i6-Wdy"/>
+                    <constraint firstAttribute="bottom" secondItem="ztr-dZ-gip" secondAttribute="bottom" constant="16" id="yDk-GO-f0h"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

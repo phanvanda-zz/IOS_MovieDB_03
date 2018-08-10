@@ -9,6 +9,11 @@
 import UIKit
 import Reusable
 
+protocol TopTableViewDelegate: class {
+    func loadmoreAction(url: String,name: String)
+    func pushMovieDetail(movie: Movie)
+}
+
 class TopFilmTableViewCell: UITableViewCell, NibReusable {
 
     @IBOutlet private weak var nameLabel: UILabel!
@@ -16,7 +21,8 @@ class TopFilmTableViewCell: UITableViewCell, NibReusable {
     
     var movies = [Movie]()
     var name = ""
-    weak var delegate: TableViewDelegate?
+    var url = ""
+    weak var delegate: TopTableViewDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,16 +35,17 @@ class TopFilmTableViewCell: UITableViewCell, NibReusable {
         self.collectionView.register(cellType: MovieCollectionViewCell.self)
     }
     
-    func updateCell(movies: [Movie]?,namelbl:String) {
+    func updateCell(movies: [Movie]?,namelbl:String, url: String) {
         guard let movies = movies else { return }
         self.movies = movies
         self.nameLabel.text = namelbl
+        self.url = url
         self.collectionView.reloadData()
         name = namelbl
     }
     
     @IBAction func loadmoreActionButton(_ sender: Any) {
-        delegate?.loadmoreAction(name: name, movies: movies)
+        delegate?.loadmoreAction(url: self.url,name: self.name)
     }
 }
 
@@ -57,7 +64,7 @@ extension TopFilmTableViewCell: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.width) / 4 + 6 * cellConstaintSize.spaceCollectionCell , height: collectionView.frame.height)
+        return CGSize(width: (collectionView.frame.width) / 3 - sizeCollectionView.spaceItem , height: collectionView.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

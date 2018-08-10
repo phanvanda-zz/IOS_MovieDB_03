@@ -15,7 +15,6 @@ protocol HomeRepository {
 }
 
 typealias completionGenres = (BaseResult<GenreResponse>) -> Void
-//typealias completionMovies = (BaseResult<MoviesListResponse>) -> Void
 
 class HomeRepositoryImpl: HomeRepository {
     private let api: APIService?

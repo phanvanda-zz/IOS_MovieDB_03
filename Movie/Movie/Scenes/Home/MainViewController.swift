@@ -31,7 +31,8 @@ class MainViewController: UITabBarController {
     private func setupView() {
           self.delegate = self
     }
-    
+}
+extension UIViewController {
     func setupViewController(name_storyboard: String, id: String) -> UIViewController {
         let storyboard = UIStoryboard(name: name_storyboard, bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: id)

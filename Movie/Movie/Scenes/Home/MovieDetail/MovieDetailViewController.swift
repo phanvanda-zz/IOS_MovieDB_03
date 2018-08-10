@@ -7,8 +7,6 @@ import StatusBarNotifications
 
 final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
     private struct Constant {
-        static let spaceItem = CGFloat(0)
-        static let spaceLine = CGFloat(0)
         static let ratio: CGFloat = 1 / 2
         static let actorStr = "ACTOR"
         static let crewStr = "CREW"
@@ -24,6 +22,7 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
     }
     
     // MARK: OUTLET
+    @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var titleScreenLabel: UILabel!
     @IBOutlet private weak var titleView: UIView!
     @IBOutlet private weak var infoView: UIView!
@@ -34,6 +33,7 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
     @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var popularLabel: UILabel!
     @IBOutlet private weak var likeButton: UIButton!
+    @IBOutlet private weak var youtubeImageView: UIImageView!
     
     // MARK: reviewTrailerView
     @IBOutlet private weak var heightConstraintView: NSLayoutConstraint!
@@ -56,12 +56,15 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
     var heighLabel: CGFloat = 0
     private let moviesRepository: MovieRepository = MovieRepositoryImpl(api: APIService.share)
     static var sceneStoryboard = UIStoryboard(name: Storyboard.home, bundle: nil)
-    
     //MARK: FUNCION
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         loadData()
+    }
+    
+    @IBAction func swipBack(_ sender: Any) {
+        dismissDetail()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,7 +87,7 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
             else { return }
         titleScreenLabel.text = title
         titleMovie.text = title
-        posterImageView.sd_setImage(with: url, completed: nil)
+        posterImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "not_found"), options: .allowInvalidSSLCertificates, completed: nil)
         cosmosView.rating = vote / 2
         voteLabel.text = "( " + String(vote) + " )"
         dateLabel.text = "Release date: " + releaseDate 
@@ -133,6 +136,7 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
     private func getTrailer() {
         guard let key = keys.first?.key else { return }
         youtubePlayer.load(withVideoId: key)
+        youtubeImageView.isHidden = true
     }
     
     private func pushCreditDetail(credit: Credit?) {
@@ -161,7 +165,7 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
     }
     
     @IBAction private func backTappedButton(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        dismissDetail()
     }
     
     @IBAction func likeTappedButton(_ sender: Any) {
@@ -187,14 +191,14 @@ final class MovieDetailViewController: UIViewController, StoryboardSceneBased {
         }
         if (!flag) {
             flag = !flag
-            HandlingMoviesDatabase.shared.insertMovie(movie: movieLike)
+            let _ = HandlingMoviesDatabase.shared.insertMovie(movie: movieLike)
             likeButton.setImage(#imageLiteral(resourceName: "like_yes"), for: .normal)
             StatusBarNotifications.show(withText: ConstantString.added,
                                         animation: .slideFromTop,
                                         backgroundColor: .black,
                                         textColor: ColorConstant.textNoti)
         } else {
-            HandlingMoviesDatabase.shared.deteleMovie(movie: movieLike)
+            let _ = HandlingMoviesDatabase.shared.deteleMovie(movie: movieLike)
             flag = !flag
             likeButton.setImage(#imageLiteral(resourceName: "like_no"), for: .normal)
             StatusBarNotifications.show(withText: ConstantString.removed,
@@ -223,7 +227,7 @@ extension MovieDetailViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return infoView.frame.height + Constant.heightMore
+        return sizeTableView.heighTableViewCell + 16
     }
 }
 
@@ -231,6 +235,6 @@ extension MovieDetailViewController: pushCreditTableViewDelegate {
     func pushCreditDetail(credit: Credit) {
         let vc = CreditDetailViewController(nibName: IdentifierScreen.credit, bundle: nil)
         vc.credit = credit
-        present(vc, animated: true, completion: nil)
+        presentDetail(vc)
     }
 }

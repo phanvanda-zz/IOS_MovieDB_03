@@ -10,7 +10,7 @@ import UIKit
 import Reusable
 
 class SearchViewController: UIViewController, NibReusable {
-    @IBOutlet private weak var nameScreen: UILabel!
+    @IBOutlet private weak var titleTopView: UIView!
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var collectionView: UICollectionView!
     
@@ -25,6 +25,19 @@ class SearchViewController: UIViewController, NibReusable {
         super.viewDidLoad()
         setupSearchBar()
         setup()
+        setupLine(view: titleTopView)
+    }
+    
+    private func setupLine(view: UIView) {
+        let lineView = UIView()
+        lineView.backgroundColor = ColorConstant.lineColor
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(lineView)
+        
+        lineView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        lineView.topAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        lineView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        lineView.heightAnchor.constraint(equalToConstant: 1).isActive = true
     }
     
     private func setup() {
@@ -82,7 +95,7 @@ class SearchViewController: UIViewController, NibReusable {
     func pushMovieDetail(movie: Movie) {
         let vc = MovieDetailViewController.instantiate()
         vc.movie = movie
-        self.present(vc, animated: true, completion: nil)
+        presentDetail(vc)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -104,15 +117,16 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.width) / 3, height: collectionView.frame.height / 2 -  cellConstaintSize.plusHeighCollection)
+        return CGSize(width: (collectionView.frame.width) / 3 - sizeCollectionView.spaceItem, height: sizeTableView.heighTableViewCell)
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return sizeCollectionView.spaceItem
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return sizeCollectionView.spaceItem
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
